@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../../../core/utils/app_card.dart';
 import '../../model/project.dart';
 
 class ProjectListWidget extends StatelessWidget {
@@ -28,29 +29,27 @@ class ProjectListWidget extends StatelessWidget {
           duration: const Duration(milliseconds: 220),
           tween: Tween(begin: 0, end: 1),
           builder: (context, value, child) => Opacity(opacity: value, child: child),
-          child: Card(
+          child: AppCard(
             margin: const EdgeInsets.only(bottom: 12),
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-              child: Row(
-                children: [
-                  Icon(project.isSuccess ? Icons.check_circle : Icons.cancel, color: color),
-                  const SizedBox(width: 12),
-                  Expanded(
-                    child: Text(
-                      project.name,
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                      style: Theme.of(context).textTheme.titleMedium?.copyWith(color: color),
-                    ),
-                  ),
-                  const SizedBox(width: 12),
-                  Text(
-                    markLabel,
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+            child: Row(
+              children: [
+                Icon(project.isSuccess ? Icons.check_circle : Icons.cancel, color: color),
+                const SizedBox(width: 12),
+                Expanded(
+                  child: Text(
+                    project.name,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
                     style: Theme.of(context).textTheme.titleMedium?.copyWith(color: color),
                   ),
-                ],
-              ),
+                ),
+                const SizedBox(width: 12),
+                Text(
+                  markLabel,
+                  style: Theme.of(context).textTheme.titleMedium?.copyWith(color: color),
+                ),
+              ],
             ),
           ),
         );

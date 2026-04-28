@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../../../core/utils/app_card.dart';
+import '../../../core/utils/app_colors.dart';
 import '../model/user_profile.dart';
 import 'widgets/profile_header.dart';
 import 'widgets/project_list_widget.dart';
@@ -12,6 +14,8 @@ class ProfileScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final brightness = Theme.of(context).brightness;
+
     return Scaffold(
       appBar: AppBar(
         title: Text(user.login),
@@ -36,10 +40,19 @@ class ProfileScreen extends StatelessWidget {
                   ],
                 ),
                 const SizedBox(height: 24),
-                Text('Skills', style: Theme.of(context).textTheme.titleLarge),
+                Text(
+                  'Skills',
+                  style: Theme.of(context)
+                      .textTheme
+                      .titleLarge
+                      ?.copyWith(color: AppColors.textPrimary(brightness)),
+                ),
                 const SizedBox(height: 12),
                 if (user.skills.isEmpty)
-                  const Text('No skills available.')
+                  Text(
+                    'No skills available.',
+                    style: TextStyle(color: AppColors.textSecondary(brightness)),
+                  )
                 else
                   GridView.builder(
                     shrinkWrap: true,
@@ -54,7 +67,13 @@ class ProfileScreen extends StatelessWidget {
                     itemBuilder: (context, index) => SkillCard(skill: user.skills[index]),
                   ),
                 const SizedBox(height: 24),
-                Text('Projects', style: Theme.of(context).textTheme.titleLarge),
+                Text(
+                  'Projects',
+                  style: Theme.of(context)
+                      .textTheme
+                      .titleLarge
+                      ?.copyWith(color: AppColors.textPrimary(brightness)),
+                ),
                 const SizedBox(height: 12),
                 ProjectListWidget(projects: user.projects),
               ],
@@ -74,19 +93,31 @@ class _InfoCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final brightness = Theme.of(context).brightness;
+
     return SizedBox(
       width: 160,
-      child: Card(
-        child: Padding(
-          padding: const EdgeInsets.all(12),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(label, style: Theme.of(context).textTheme.labelMedium),
-              const SizedBox(height: 8),
-              Text(value, style: Theme.of(context).textTheme.titleLarge),
-            ],
-          ),
+      child: AppCard(
+        padding: const EdgeInsets.all(12),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              label,
+              style: Theme.of(context)
+                  .textTheme
+                  .labelMedium
+                  ?.copyWith(color: AppColors.textSecondary(brightness)),
+            ),
+            const SizedBox(height: 8),
+            Text(
+              value,
+              style: Theme.of(context)
+                  .textTheme
+                  .titleLarge
+                  ?.copyWith(color: AppColors.textPrimary(brightness)),
+            ),
+          ],
         ),
       ),
     );

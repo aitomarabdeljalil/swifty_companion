@@ -18,7 +18,9 @@ class SwiftyCompanionApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Swifty Companion',
-      theme: AppTheme.build(),
+      theme: AppTheme.light(),
+      darkTheme: AppTheme.dark(),
+      themeMode: ThemeMode.system,
       home: const SearchScreen(),
     );
   }
