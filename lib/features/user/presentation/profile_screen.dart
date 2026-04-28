@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../model/user_profile.dart';
 import 'widgets/profile_header.dart';
-import 'widgets/project_tile.dart';
+import 'widgets/project_list_widget.dart';
 import 'widgets/skill_card.dart';
 
 class ProfileScreen extends StatelessWidget {
@@ -56,16 +56,7 @@ class ProfileScreen extends StatelessWidget {
                 const SizedBox(height: 24),
                 Text('Projects', style: Theme.of(context).textTheme.titleLarge),
                 const SizedBox(height: 12),
-                if (user.projects.isEmpty)
-                  const Text('No projects available.')
-                else
-                  ListView.separated(
-                    shrinkWrap: true,
-                    physics: const NeverScrollableScrollPhysics(),
-                    itemCount: user.projects.length,
-                    separatorBuilder: (_, __) => const SizedBox(height: 12),
-                    itemBuilder: (context, index) => ProjectTile(project: user.projects[index]),
-                  ),
+                ProjectListWidget(projects: user.projects),
               ],
             ),
           );

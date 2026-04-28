@@ -57,7 +57,13 @@ class UserProfile {
           final validated = entry['validated?'] as bool?;
           final status = _mapProjectStatus(statusRaw, validated);
           final mark = (entry['final_mark'] as num?)?.toInt();
-          return Project(name: name, status: status, finalMark: mark);
+          return Project(
+            name: name,
+            status: status,
+            rawStatus: statusRaw,
+            validated: validated,
+            finalMark: mark,
+          );
         })
         .where((project) => project.name.isNotEmpty)
         .toList();
