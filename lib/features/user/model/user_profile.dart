@@ -11,6 +11,7 @@ class UserProfile {
     required this.location,
     required this.imageUrl,
     required this.coalitionCoverUrl,
+    required this.coalitionColorHex,
     required this.isStaff,
     required this.skills,
     required this.projects,
@@ -24,12 +25,14 @@ class UserProfile {
   final String location;
   final String imageUrl;
   final String? coalitionCoverUrl;
+  final String? coalitionColorHex;
   final bool isStaff;
   final List<Skill> skills;
   final List<Project> projects;
 
   UserProfile copyWith({
     String? coalitionCoverUrl,
+    String? coalitionColorHex,
   }) {
     return UserProfile(
       id: id,
@@ -40,6 +43,7 @@ class UserProfile {
       location: location,
       imageUrl: imageUrl,
       coalitionCoverUrl: coalitionCoverUrl ?? this.coalitionCoverUrl,
+      coalitionColorHex: coalitionColorHex ?? this.coalitionColorHex,
       isStaff: isStaff,
       skills: skills,
       projects: projects,
@@ -101,6 +105,7 @@ class UserProfile {
       location: json['location'] as String? ?? 'Unavailable',
       imageUrl: (json['image'] as Map<String, dynamic>?)?['link'] as String? ?? '',
       coalitionCoverUrl: null,
+      coalitionColorHex: null,
       isStaff: (json['staff?'] as bool?) ?? (json['staff'] as bool?) ?? false,
       skills: skills,
       projects: projects,

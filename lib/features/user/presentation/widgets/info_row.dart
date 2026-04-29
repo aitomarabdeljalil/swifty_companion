@@ -30,6 +30,7 @@ class InfoRow extends StatelessWidget {
     final labelText = label ?? '';
 
     final effectiveTextColor = textColor ?? AppColors.textPrimary(brightness);
+    final effectiveLabelColor = textColor ?? AppColors.textSecondary(brightness);
     final effectiveIconColor = iconColor ?? AppColors.textSecondary(brightness);
 
     return Row(
@@ -46,7 +47,7 @@ class InfoRow extends StatelessWidget {
               ? Text.rich(
                   TextSpan(
                     text: '$labelText: ',
-                    style: TextStyle(color: AppColors.textSecondary(brightness)),
+                    style: TextStyle(color: effectiveLabelColor),
                     children: [
                       TextSpan(
                         text: displayValue,

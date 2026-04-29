@@ -2,11 +2,13 @@ import 'package:flutter/material.dart';
 
 import '../../../core/utils/app_card.dart';
 import '../../../core/utils/app_colors.dart';
+import '../../../core/utils/color_parser.dart';
 import '../../../core/widgets/theme_mode_toggle.dart';
 import '../model/user_profile.dart';
 import 'widgets/profile_header.dart';
 import 'widgets/project_list_widget.dart';
 import 'widgets/project_segmented_control.dart';
+import 'widgets/level_progress_widget.dart';
 import 'widgets/skill_card.dart';
 import 'widgets/info_row.dart';
 
@@ -45,7 +47,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
               children: [
                 ProfileHeader(user: user),
                 const SizedBox(height: 16),
-                _InfoRowSection(user: user),
+                _InfoRowSection(
+                  user: user,
+                  coalitionColor: ColorParser.parseHex(
+                    user.coalitionColorHex,
+                    fallback: AppColors.coalitionFallback,
+                  ),
+                ),
                 const SizedBox(height: 24),
                 Text(
                   'Skills',
@@ -105,12 +113,21 @@ class _ProfileScreenState extends State<ProfileScreen> {
 }
 
 class _InfoRowSection extends StatelessWidget {
-  const _InfoRowSection({required this.user});
+  const _InfoRowSection({
+    required this.user,
+    required this.coalitionColor,
+  });
 
   final UserProfile user;
+  final Color coalitionColor;
 
   @override
   Widget build(BuildContext context) {
+    final brightness = Theme.of(context).brightness;
+    final useCoalition = brightness == Brightness.light;
+    final valueColor = useCoalition ? coalitionColor : null;
+    final iconColor = useCoalition ? coalitionColor : null;
+
     return LayoutBuilder(
       builder: (context, constraints) {
         final useColumn = constraints.maxWidth < 420;
@@ -119,11 +136,14 @@ class _InfoRowSection extends StatelessWidget {
             icon: Icons.account_balance_wallet,
             label: 'Wallet',
             value: user.wallet.toString(),
+            valueColor: valueColor,
+            iconColor: iconColor,
           ),
-          _InfoCard(
-            icon: Icons.trending_up,
-            label: 'Level',
-            value: user.level.toStringAsFixed(2),
+          _LevelCard(
+            level: user.level,
+            coalitionColor: coalitionColor,
+            iconColor: iconColor,
+            textColor: valueColor,
           ),
         ];
 
@@ -155,11 +175,15 @@ class _InfoCard extends StatelessWidget {
     required this.icon,
     required this.label,
     required this.value,
+    this.valueColor,
+    this.iconColor,
   });
 
   final IconData icon;
   final String label;
   final String value;
+  final Color? valueColor;
+  final Color? iconColor;
 
   @override
   Widget build(BuildContext context) {
@@ -169,6 +193,35 @@ class _InfoCard extends StatelessWidget {
         icon: icon,
         label: label,
         value: value,
+        textColor: valueColor,
+        iconColor: iconColor,
+      ),
+    );
+  }
+}
+
+class _LevelCard extends StatelessWidget {
+  const _LevelCard({
+    required this.level,
+    required this.coalitionColor,
+    this.iconColor,
+    this.textColor,
+  });
+
+  final double? level;
+  final Color coalitionColor;
+  final Color? iconColor;
+  final Color? textColor;
+
+  @override
+  Widget build(BuildContext context) {
+    return AppCard(
+      padding: const EdgeInsets.all(12),
+      child: LevelProgressWidget(
+        level: level,
+        coalitionColor: coalitionColor,
+        iconColor: iconColor,
+        textColor: textColor,
       ),
     );
   }

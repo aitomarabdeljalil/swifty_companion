@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 
 import '../../../core/network/response_parser.dart';
+import '../model/coalition.dart';
 import '../model/user_profile.dart';
 
 class UserApi {
@@ -16,7 +17,7 @@ class UserApi {
     return parseOrThrow(response.data, (json) => UserProfile.fromApi(json as Map<String, dynamic>));
   }
 
-  Future<String?> getCoalitionCoverUrl(int userId, {CancelToken? cancelToken}) async {
+  Future<CoalitionData?> getCoalitionData(int userId, {CancelToken? cancelToken}) async {
     final response = await _dio.get(
       '/v2/users/$userId/coalitions',
       cancelToken: cancelToken,
@@ -27,7 +28,10 @@ class UserApi {
         return null;
       }
       final first = list.first as Map<String, dynamic>;
-      return first['cover_url'] as String?;
+      return CoalitionData(
+        coverUrl: first['cover_url'] as String?,
+        colorHex: first['color'] as String?,
+      );
     });
   }
 }

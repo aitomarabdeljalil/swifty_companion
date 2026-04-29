@@ -9,6 +9,7 @@ class AppColors {
   static const Color failureLight = Color(0xFFC0392B);
   static const Color successDark = Color(0xFF43C26B);
   static const Color failureDark = Color(0xFFFF6B6B);
+  static const Color coalitionFallback = Color(0xFF1B4965);
 
   static Color background(Brightness brightness) {
     return brightness == Brightness.dark ? darkBackground : lightBackground;

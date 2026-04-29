@@ -17,11 +17,17 @@ class UserRepository {
         return user;
       }
       try {
-        final coverUrl = await _api.getCoalitionCoverUrl(user.id, cancelToken: cancelToken);
-        if (coverUrl != null) {
-          debugPrint('Coalition cover_url: $coverUrl');
+        final coalition = await _api.getCoalitionData(user.id, cancelToken: cancelToken);
+        if (coalition?.coverUrl != null) {
+          debugPrint('Coalition cover_url: ${coalition!.coverUrl}');
         }
-        return user.copyWith(coalitionCoverUrl: coverUrl);
+        if (coalition?.colorHex != null) {
+          debugPrint('Coalition color: ${coalition!.colorHex}');
+        }
+        return user.copyWith(
+          coalitionCoverUrl: coalition?.coverUrl,
+          coalitionColorHex: coalition?.colorHex,
+        );
       } catch (error) {
         debugPrint('Coalition fetch failed: $error');
         return user;
