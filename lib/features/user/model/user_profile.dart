@@ -3,24 +3,48 @@ import 'skill.dart';
 
 class UserProfile {
   UserProfile({
+    required this.id,
     required this.login,
     required this.email,
     required this.wallet,
     required this.level,
     required this.location,
     required this.imageUrl,
+    required this.coalitionCoverUrl,
+    required this.isStaff,
     required this.skills,
     required this.projects,
   });
 
+  final int id;
   final String login;
   final String email;
   final int wallet;
   final double level;
   final String location;
   final String imageUrl;
+  final String? coalitionCoverUrl;
+  final bool isStaff;
   final List<Skill> skills;
   final List<Project> projects;
+
+  UserProfile copyWith({
+    String? coalitionCoverUrl,
+  }) {
+    return UserProfile(
+      id: id,
+      login: login,
+      email: email,
+      wallet: wallet,
+      level: level,
+      location: location,
+      imageUrl: imageUrl,
+      coalitionCoverUrl: coalitionCoverUrl ?? this.coalitionCoverUrl,
+      isStaff: isStaff,
+      skills: skills,
+      projects: projects,
+    );
+  }
 
   factory UserProfile.fromApi(Map<String, dynamic> json) {
     final cursusUsers = (json['cursus_users'] as List?) ?? <dynamic>[];
@@ -69,12 +93,15 @@ class UserProfile {
         .toList();
 
     return UserProfile(
+      id: (json['id'] as num? ?? 0).toInt(),
       login: json['login'] as String? ?? 'unknown',
       email: json['email'] as String? ?? 'unknown',
       wallet: (json['wallet'] as num? ?? 0).toInt(),
       level: (selectedCursus?['level'] as num? ?? 0).toDouble(),
       location: json['location'] as String? ?? 'Unavailable',
       imageUrl: (json['image'] as Map<String, dynamic>?)?['link'] as String? ?? '',
+      coalitionCoverUrl: null,
+      isStaff: (json['staff?'] as bool?) ?? (json['staff'] as bool?) ?? false,
       skills: skills,
       projects: projects,
     );

@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'search_state.dart';
 import 'user_providers.dart';
 import 'widgets/loading_skeleton.dart';
+import 'widgets/login_input_field.dart';
 import 'profile_screen.dart';
 
 class SearchScreen extends ConsumerStatefulWidget {
@@ -64,14 +65,10 @@ class _SearchScreenState extends ConsumerState<SearchScreen> {
                       style: Theme.of(context).textTheme.headlineSmall,
                     ),
                     const SizedBox(height: 16),
-                    TextField(
+                    LoginInputField(
                       controller: _controller,
-                      textInputAction: TextInputAction.search,
+                      errorText: state.isInputError ? state.errorMessage : null,
                       onSubmitted: (_) => _onSearch(),
-                      decoration: InputDecoration(
-                        labelText: 'Login',
-                        hintText: 'Enter login',
-                      ),
                     ),
                     const SizedBox(height: 12),
                     FilledButton(

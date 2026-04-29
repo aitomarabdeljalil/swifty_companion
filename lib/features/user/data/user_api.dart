@@ -15,4 +15,19 @@ class UserApi {
     );
     return parseOrThrow(response.data, (json) => UserProfile.fromApi(json as Map<String, dynamic>));
   }
+
+  Future<String?> getCoalitionCoverUrl(int userId, {CancelToken? cancelToken}) async {
+    final response = await _dio.get(
+      '/v2/users/$userId/coalitions',
+      cancelToken: cancelToken,
+    );
+    return parseOrThrow(response.data, (json) {
+      final list = (json as List?) ?? <dynamic>[];
+      if (list.isEmpty) {
+        return null;
+      }
+      final first = list.first as Map<String, dynamic>;
+      return first['cover_url'] as String?;
+    });
+  }
 }

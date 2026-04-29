@@ -14,9 +14,14 @@ class SearchViewModel extends StateNotifier<SearchState> {
   int _requestId = 0;
 
   Future<void> search(String login) async {
-    final validation = Validators.login(login);
+    final trimmed = login.trim();
+    final validation = Validators.login(trimmed);
     if (validation != null) {
-      state = state.copyWith(status: SearchStatus.error, errorMessage: validation);
+      state = state.copyWith(
+        status: SearchStatus.error,
+        errorMessage: validation,
+        isInputError: true,
+      );
       return;
     }
 
@@ -27,17 +32,18 @@ class SearchViewModel extends StateNotifier<SearchState> {
     state = state.copyWith(
       status: SearchStatus.loading,
       errorMessage: null,
+      isInputError: false,
     );
 
     try {
-      final user = await _repository.getUser(login.trim(), cancelToken: _cancelToken);
+      final user = await _repository.getUser(trimmed, cancelToken: _cancelToken);
       if (currentRequest != _requestId) {
         return;
       }
       state = state.copyWith(
         status: SearchStatus.success,
         user: user,
-        lastLogin: login.trim(),
+        lastLogin: trimmed,
         errorMessage: null,
       );
     } on AppError catch (error) {
@@ -50,6 +56,7 @@ class SearchViewModel extends StateNotifier<SearchState> {
       state = state.copyWith(
         status: SearchStatus.error,
         errorMessage: error.message,
+        isInputError: false,
       );
     } catch (_) {
       if (currentRequest != _requestId) {
@@ -58,6 +65,7 @@ class SearchViewModel extends StateNotifier<SearchState> {
       state = state.copyWith(
         status: SearchStatus.error,
         errorMessage: 'Unexpected error. Please try again.',
+        isInputError: false,
       );
     }
   }

@@ -10,6 +10,8 @@ class InfoRow extends StatelessWidget {
     this.iconSize = 20,
     this.label,
     this.showLabel = true,
+    this.textColor,
+    this.iconColor,
   });
 
   final IconData icon;
@@ -17,6 +19,8 @@ class InfoRow extends StatelessWidget {
   final double iconSize;
   final String? label;
   final bool showLabel;
+  final Color? textColor;
+  final Color? iconColor;
 
   @override
   Widget build(BuildContext context) {
@@ -25,13 +29,16 @@ class InfoRow extends StatelessWidget {
 
     final labelText = label ?? '';
 
+    final effectiveTextColor = textColor ?? AppColors.textPrimary(brightness);
+    final effectiveIconColor = iconColor ?? AppColors.textSecondary(brightness);
+
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Icon(
           icon,
           size: iconSize,
-          color: AppColors.textSecondary(brightness),
+          color: effectiveIconColor,
         ),
         const SizedBox(width: 10),
         Expanded(
@@ -43,7 +50,7 @@ class InfoRow extends StatelessWidget {
                     children: [
                       TextSpan(
                         text: displayValue,
-                        style: TextStyle(color: AppColors.textPrimary(brightness)),
+                        style: TextStyle(color: effectiveTextColor),
                       ),
                     ],
                   ),
@@ -54,7 +61,7 @@ class InfoRow extends StatelessWidget {
                   displayValue,
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
-                  style: TextStyle(color: AppColors.textPrimary(brightness)),
+                  style: TextStyle(color: effectiveTextColor),
                 ),
         ),
       ],
