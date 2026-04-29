@@ -19,12 +19,26 @@ class SkillCard extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
-            skill.name,
-            style: Theme.of(context)
-                .textTheme
-                .titleMedium
-                ?.copyWith(color: AppColors.textPrimary(brightness)),
+          Row(
+            children: [
+              Icon(
+                Icons.code,
+                size: 20,
+                color: AppColors.textSecondary(brightness),
+              ),
+              const SizedBox(width: 10),
+              Expanded(
+                child: Text(
+                  skill.name,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: Theme.of(context)
+                      .textTheme
+                      .titleMedium
+                      ?.copyWith(color: AppColors.textPrimary(brightness)),
+                ),
+              ),
+            ],
           ),
           const SizedBox(height: 8),
           LinearProgressIndicator(value: progress),

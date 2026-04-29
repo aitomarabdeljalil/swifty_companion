@@ -2,26 +2,36 @@ import 'package:flutter/material.dart';
 
 import '../../../../core/utils/app_card.dart';
 import '../../model/project.dart';
+import 'project_segmented_control.dart';
 
 class ProjectListWidget extends StatelessWidget {
-  const ProjectListWidget({super.key, required this.projects});
+  const ProjectListWidget({
+    super.key,
+    required this.projects,
+    required this.filter,
+  });
 
   final List<Project> projects;
+  final ProjectFilter filter;
 
   @override
   Widget build(BuildContext context) {
     final finishedProjects = projects.where((project) => project.isFinished).toList();
+    final visibleProjects = finishedProjects.where((project) {
+      final isPiscine = project.name.toLowerCase().contains('piscine');
+      return filter == ProjectFilter.piscine ? isPiscine : !isPiscine;
+    }).toList();
 
-    if (finishedProjects.isEmpty) {
+    if (visibleProjects.isEmpty) {
       return const Text('No projects found');
     }
 
     return ListView.builder(
       shrinkWrap: true,
       physics: const NeverScrollableScrollPhysics(),
-      itemCount: finishedProjects.length,
+      itemCount: visibleProjects.length,
       itemBuilder: (context, index) {
-        final project = finishedProjects[index];
+        final project = visibleProjects[index];
         final color = project.isSuccess ? Colors.green.shade700 : Colors.red.shade600;
         final markLabel = project.finalMark?.toString() ?? 'N/A';
 

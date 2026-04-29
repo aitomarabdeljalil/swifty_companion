@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../../../../core/utils/app_card.dart';
 import '../../../../core/utils/app_colors.dart';
 import '../../model/user_profile.dart';
+import 'info_row.dart';
 
 class ProfileHeader extends StatelessWidget {
   const ProfileHeader({super.key, required this.user});
@@ -33,15 +34,17 @@ class ProfileHeader extends StatelessWidget {
                       .titleLarge
                       ?.copyWith(color: AppColors.textPrimary(brightness)),
                 ),
-                const SizedBox(height: 4),
-                Text(
-                  user.email,
-                  style: TextStyle(color: AppColors.textSecondary(brightness)),
+                const SizedBox(height: 8),
+                InfoRow(
+                  icon: Icons.email,
+                  value: user.email,
+                  showLabel: false,
                 ),
-                const SizedBox(height: 4),
-                Text(
-                  'Location: ${user.location}',
-                  style: TextStyle(color: AppColors.textSecondary(brightness)),
+                const SizedBox(height: 6),
+                InfoRow(
+                  icon: Icons.location_on,
+                  value: user.location,
+                  showLabel: false,
                 ),
               ],
             ),
