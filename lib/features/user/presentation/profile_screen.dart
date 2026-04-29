@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../../core/utils/app_card.dart';
 import '../../../core/utils/app_colors.dart';
+import '../../../core/widgets/theme_mode_toggle.dart';
 import '../model/user_profile.dart';
 import 'widgets/profile_header.dart';
 import 'widgets/project_list_widget.dart';
@@ -29,6 +30,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text(user.login),
+        actions: const [
+          ThemeModeToggle(),
+        ],
       ),
       body: LayoutBuilder(
         builder: (context, constraints) {

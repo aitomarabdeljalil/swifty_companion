@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../../core/utils/app_card.dart';
+import '../../../../core/utils/app_colors.dart';
 import '../../model/project.dart';
 import 'project_segmented_control.dart';
 
@@ -32,7 +33,10 @@ class ProjectListWidget extends StatelessWidget {
       itemCount: visibleProjects.length,
       itemBuilder: (context, index) {
         final project = visibleProjects[index];
-        final color = project.isSuccess ? Colors.green.shade700 : Colors.red.shade600;
+        final brightness = Theme.of(context).brightness;
+        final color = project.isSuccess
+          ? AppColors.success(brightness)
+          : AppColors.failure(brightness);
         final markLabel = project.finalMark?.toString() ?? 'N/A';
 
         return TweenAnimationBuilder<double>(

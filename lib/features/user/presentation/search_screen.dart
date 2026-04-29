@@ -6,6 +6,7 @@ import 'user_providers.dart';
 import 'widgets/loading_skeleton.dart';
 import 'widgets/login_input_field.dart';
 import 'profile_screen.dart';
+import '../../../core/widgets/theme_mode_toggle.dart';
 
 class SearchScreen extends ConsumerStatefulWidget {
   const SearchScreen({super.key});
@@ -47,6 +48,9 @@ class _SearchScreenState extends ConsumerState<SearchScreen> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Swifty Companion'),
+        actions: const [
+          ThemeModeToggle(),
+        ],
       ),
       body: LayoutBuilder(
         builder: (context, constraints) {

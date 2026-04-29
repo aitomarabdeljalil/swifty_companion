@@ -3,6 +3,7 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'core/utils/app_theme.dart';
+import 'core/utils/theme_mode_provider.dart';
 import 'features/user/presentation/search_screen.dart';
 
 Future<void> main() async {
@@ -11,16 +12,18 @@ Future<void> main() async {
   runApp(const ProviderScope(child: SwiftyCompanionApp()));
 }
 
-class SwiftyCompanionApp extends StatelessWidget {
+class SwiftyCompanionApp extends ConsumerWidget {
   const SwiftyCompanionApp({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final themeMode = ref.watch(themeModeProvider);
+
     return MaterialApp(
       title: 'Swifty Companion',
       theme: AppTheme.light(),
       darkTheme: AppTheme.dark(),
-      themeMode: ThemeMode.system,
+      themeMode: themeMode,
       home: const SearchScreen(),
     );
   }

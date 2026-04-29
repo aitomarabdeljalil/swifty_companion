@@ -5,6 +5,10 @@ class AppColors {
   static const Color lightCard = Color(0xFFEAEFF5);
   static const Color darkBackground = Color(0xFF121417);
   static const Color darkCard = Color(0xFF1C2126);
+  static const Color successLight = Color(0xFF1B8A3C);
+  static const Color failureLight = Color(0xFFC0392B);
+  static const Color successDark = Color(0xFF43C26B);
+  static const Color failureDark = Color(0xFFFF6B6B);
 
   static Color background(Brightness brightness) {
     return brightness == Brightness.dark ? darkBackground : lightBackground;
@@ -26,5 +30,27 @@ class AppColors {
     return brightness == Brightness.dark
         ? Colors.black.withOpacity(0.25)
         : Colors.black.withOpacity(0.08);
+  }
+
+  static Color overlay(Brightness brightness) {
+    return brightness == Brightness.dark
+        ? Colors.black.withOpacity(0.6)
+        : Colors.black.withOpacity(0.5);
+  }
+
+  static Color textOnImage(Brightness brightness) {
+    return Colors.white;
+  }
+
+  static Color iconOnImage(Brightness brightness) {
+    return Colors.white70;
+  }
+
+  static Color success(Brightness brightness) {
+    return brightness == Brightness.dark ? successDark : successLight;
+  }
+
+  static Color failure(Brightness brightness) {
+    return brightness == Brightness.dark ? failureDark : failureLight;
   }
 }

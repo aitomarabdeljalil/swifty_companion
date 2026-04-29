@@ -32,10 +32,16 @@ class AppTheme {
       brightness: brightness,
       textTheme: textTheme,
       scaffoldBackgroundColor: AppColors.background(brightness),
+      cardColor: AppColors.card(brightness),
       inputDecorationTheme: InputDecorationTheme(
         filled: true,
         fillColor: AppColors.card(brightness),
         border: const OutlineInputBorder(),
+      ),
+      appBarTheme: AppBarTheme(
+        backgroundColor: AppColors.background(brightness),
+        foregroundColor: AppColors.textPrimary(brightness),
+        elevation: 0,
       ),
     );
   }

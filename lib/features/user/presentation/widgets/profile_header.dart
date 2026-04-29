@@ -29,31 +29,33 @@ class ProfileHeader extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
-                user.login,
-                style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                      color: useCoalition ? Colors.white : AppColors.textPrimary(brightness),
-                      fontWeight: useCoalition ? FontWeight.w700 : FontWeight.w600,
-                      shadows: useCoalition
-                          ? const [Shadow(blurRadius: 4, color: Colors.black45)]
-                          : null,
-                    ),
-              ),
+                Text(
+                  user.login,
+                  style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                    color: useCoalition
+                    ? AppColors.textOnImage(brightness)
+                    : AppColors.textPrimary(brightness),
+                    fontWeight: useCoalition ? FontWeight.w700 : FontWeight.w600,
+                    shadows: useCoalition
+                    ? const [Shadow(blurRadius: 4, color: Colors.black45)]
+                    : null,
+                  ),
+                ),
               const SizedBox(height: 8),
               InfoRow(
                 icon: Icons.email,
                 value: user.email,
                 showLabel: false,
-                textColor: useCoalition ? Colors.white : null,
-                iconColor: useCoalition ? Colors.white70 : null,
+                textColor: useCoalition ? AppColors.textOnImage(brightness) : null,
+                iconColor: useCoalition ? AppColors.iconOnImage(brightness) : null,
               ),
               const SizedBox(height: 6),
               InfoRow(
                 icon: Icons.location_on,
                 value: user.location,
                 showLabel: false,
-                textColor: useCoalition ? Colors.white : null,
-                iconColor: useCoalition ? Colors.white70 : null,
+                textColor: useCoalition ? AppColors.textOnImage(brightness) : null,
+                iconColor: useCoalition ? AppColors.iconOnImage(brightness) : null,
               ),
             ],
           ),
@@ -98,7 +100,7 @@ class ProfileHeader extends StatelessWidget {
               ),
             ),
             Positioned.fill(
-              child: Container(color: Colors.black.withOpacity(0.5)),
+              child: Container(color: AppColors.overlay(brightness)),
             ),
             Padding(
               padding: const EdgeInsets.all(16),
