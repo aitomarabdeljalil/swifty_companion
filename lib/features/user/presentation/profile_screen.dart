@@ -79,7 +79,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       childAspectRatio: 3.2,
                     ),
                     itemCount: user.skills.length,
-                    itemBuilder: (context, index) => SkillCard(skill: user.skills[index]),
+                    itemBuilder: (context, index) => SkillCard(
+                      skill: user.skills[index],
+                      coalitionColor: ColorParser.parseHex(
+                        user.coalitionColorHex,
+                        fallback: AppColors.coalitionFallback,
+                      ),
+                    ),
                   ),
                 const SizedBox(height: 24),
                 Text(
@@ -158,12 +164,15 @@ class _InfoRowSection extends StatelessWidget {
           );
         }
 
-        return Row(
-          children: [
-            Expanded(child: children.first),
-            const SizedBox(width: 12),
-            Expanded(child: children.last),
-          ],
+        return IntrinsicHeight(
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Expanded(child: children.first),
+              const SizedBox(width: 12),
+              Expanded(child: children.last),
+            ],
+          ),
         );
       },
     );
@@ -189,12 +198,15 @@ class _InfoCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return AppCard(
       padding: const EdgeInsets.all(12),
-      child: InfoRow(
-        icon: icon,
-        label: label,
-        value: value,
-        textColor: valueColor,
-        iconColor: iconColor,
+      child: Align(
+        alignment: Alignment.center,
+        child: InfoRow(
+          icon: icon,
+          label: label,
+          value: value,
+          textColor: valueColor,
+          iconColor: iconColor,
+        ),
       ),
     );
   }
