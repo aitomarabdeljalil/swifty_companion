@@ -20,7 +20,7 @@ class LoginInputField extends StatelessWidget {
       textInputAction: TextInputAction.search,
       onSubmitted: onSubmitted,
       inputFormatters: [
-        FilteringTextInputFormatter.allow(RegExp(r'[a-zA-Z-]')),
+        FilteringTextInputFormatter.allow(RegExp(r'[a-zA-Z0-9_-]')),
       ],
       decoration: InputDecoration(
         labelText: 'Login',
