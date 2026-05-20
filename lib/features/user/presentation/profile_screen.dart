@@ -139,10 +139,10 @@ class _ProfileHeaderDelegate extends SliverPersistentHeaderDelegate {
   final Color coalitionColor;
 
   @override
-  double get maxExtent => 220;
+  double get maxExtent => 170;
 
   @override
-  double get minExtent => 92;
+  double get minExtent => 80;
 
   @override
   bool shouldRebuild(covariant _ProfileHeaderDelegate oldDelegate) {
@@ -153,7 +153,7 @@ class _ProfileHeaderDelegate extends SliverPersistentHeaderDelegate {
   Widget build(BuildContext context, double shrinkOffset, bool overlapsContent) {
     final t = (shrinkOffset / (maxExtent - minExtent)).clamp(0.0, 1.0);
     final avatarSize = lerpDouble(64, 40, t)!;
-    final titleSize = lerpDouble(22, 16, t)!;
+    final titleSize = lerpDouble(18, 15, t)!;
     final expandedOpacity = (1 - t).clamp(0.0, 1.0);
     final collapsedOpacity = t.clamp(0.0, 1.0);
     final brightness = Theme.of(context).brightness;
@@ -187,7 +187,7 @@ class _ProfileHeaderDelegate extends SliverPersistentHeaderDelegate {
             SafeArea(
               bottom: false,
               child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
@@ -207,21 +207,24 @@ class _ProfileHeaderDelegate extends SliverPersistentHeaderDelegate {
                             opacity: expandedOpacity,
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 Text(
                                   user.login,
+                                  maxLines: 1,
+                                  overflow: TextOverflow.ellipsis,
                                   style: Theme.of(context)
                                       .textTheme
                                       .titleLarge
                                       ?.copyWith(
-                                        fontSize: titleSize + 4,
+                                        fontSize: titleSize + 2,
                                         color: useCoalition
                                             ? AppColors.textOnImage(brightness)
                                             : AppColors.textPrimary(brightness),
                                         fontWeight: FontWeight.w700,
                                       ),
                                 ),
-                                const SizedBox(height: 6),
+                                const SizedBox(height: 4),
                                 InfoRow(
                                   icon: Icons.email,
                                   value: user.email,
@@ -233,7 +236,7 @@ class _ProfileHeaderDelegate extends SliverPersistentHeaderDelegate {
                                       ? AppColors.iconOnImage(brightness)
                                       : null,
                                 ),
-                                const SizedBox(height: 6),
+                                const SizedBox(height: 4),
                                 InfoRow(
                                   icon: Icons.location_on,
                                   value: user.location,
@@ -252,9 +255,12 @@ class _ProfileHeaderDelegate extends SliverPersistentHeaderDelegate {
                             opacity: collapsedOpacity,
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 Text(
                                   user.login,
+                                  maxLines: 1,
+                                  overflow: TextOverflow.ellipsis,
                                   style: Theme.of(context)
                                       .textTheme
                                       .titleMedium
@@ -268,7 +274,23 @@ class _ProfileHeaderDelegate extends SliverPersistentHeaderDelegate {
                                 ),
                                 const SizedBox(height: 4),
                                 Text(
-                                  'Level ${user.level.toStringAsFixed(2)}',
+                                  user.email,
+                                  maxLines: 1,
+                                  overflow: TextOverflow.ellipsis,
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .bodySmall
+                                      ?.copyWith(
+                                        color: useCoalition
+                                            ? AppColors.textOnImage(brightness)
+                                            : AppColors.textSecondary(brightness),
+                                      ),
+                                ),
+                                const SizedBox(height: 2),
+                                Text(
+                                  user.location,
+                                  maxLines: 1,
+                                  overflow: TextOverflow.ellipsis,
                                   style: Theme.of(context)
                                       .textTheme
                                       .bodySmall
